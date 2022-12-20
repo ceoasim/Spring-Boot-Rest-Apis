@@ -55,6 +55,18 @@ public class BookContoller {
 
   }
 
+  // find by title
+  @GetMapping("/books/title/{title}")
+  public ResponseEntity<Book> getBook(@PathVariable("title") String title) {
+
+    Book book = bookService.getBookByTitle(title);
+    if (book == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    return ResponseEntity.of(Optional.of(book));
+
+  }
+
   // Post method to add new book
 
   @PostMapping("/books")

@@ -53,8 +53,18 @@ public class BookService {
     public Book getBookById(int id) {
         Book book = null;
         try {
-
             book = this.bookRepository.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return book;
+    }
+
+    // Get single book by title with dynamic method
+    public Book getBookByTitle(String title) {
+        Book book = null;
+        try {
+            book = this.bookRepository.findByTitle(title);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,20 +84,20 @@ public class BookService {
     }
 
     // Delete new book static method
-    // public void deleteBook(int bId) {
+    // public void deleteBook(int id) {
     // list = list.stream().filter(book -> book.getId() !=
-    // bId).collect(Collectors.toList());
+    // id).collect(Collectors.toList());
     // }
 
     // Delete new book dynamic method
-    public void deleteBook(int bId) {
-        bookRepository.deleteById(bId);
+    public void deleteBook(int id) {
+        bookRepository.deleteById(id);
     }
 
     // Update book by static method
-    // public void updateBook(Book book, int bId) {
+    // public void updateBook(Book book, int id) {
     // list = list.stream().map(b -> {
-    // if (b.getId() == bId) {
+    // if (b.getId() == id) {
     // b.setAuthor(book.getAuthor());
     // b.setTitle(book.getTitle());
     // }
@@ -96,9 +106,8 @@ public class BookService {
     // }
 
     // Update book by dynamic method
-    public void updateBook(Book book, int bId) {
-        book.setId(bId);
+    public void updateBook(Book book, int id) {
+        book.setId(id);
         bookRepository.save(book);
     }
-
 }
