@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.book.bootrestbook.dao.AuthorRepository;
+import com.api.book.bootrestbook.dao.CustomerRepository;
 import com.api.book.bootrestbook.entities.Author;
 import com.api.book.bootrestbook.entities.Book;
+import com.api.book.bootrestbook.entities.Customer;
 import com.api.book.bootrestbook.service.BookService;
 
 @RestController
@@ -27,6 +29,9 @@ public class BookContoller {
 
   @Autowired
   private AuthorRepository authorRepository;
+
+  @Autowired
+  private CustomerRepository customerRepository;
 
   // 1st way to for request mapping
   // @RequestMapping(value= "/test", method = RequestMethod.GET)
@@ -68,6 +73,18 @@ public class BookContoller {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
     return ResponseEntity.of(Optional.of(author));
+
+  }
+
+  @GetMapping("/customers")
+  public ResponseEntity<?> getAllCustomers() {
+
+    Iterable<Customer> customer = customerRepository.findAll();
+
+    if (customer == null) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    return ResponseEntity.of(Optional.of(customer));
 
   }
 

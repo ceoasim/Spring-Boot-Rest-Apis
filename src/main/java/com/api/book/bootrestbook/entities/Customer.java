@@ -5,16 +5,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,25 +24,18 @@ import lombok.NoArgsConstructor;
 @Entity
 
 // To change table name
-@Table(name = "books")
+@Table(name = "customer")
 
-public class Book {
+public class Customer {
     @Id
     // Auto generated primary key
     @GeneratedValue(strategy = GenerationType.AUTO)
     // To change column name
-    @Column(name = "book_id")
+    @Column(name = "customer_id")
     private int id;
-    private String title;
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    @JsonIgnoreProperties("books")
-    private Author author;
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "customer_book", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "book_id"), inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "customer_id"))
-    @JsonIgnoreProperties("books")
-    private List<Customer> customers = new ArrayList<>();
-
+    @ManyToMany(mappedBy = "customers")
+    @JsonIgnoreProperties("customers")
+    private List<Book> books = new ArrayList<>();
 }
